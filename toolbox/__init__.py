@@ -8,6 +8,8 @@ from toolbox.utterance import Utterance
 import numpy as np
 import traceback
 import sys
+import os
+import librosa
 
 
 # Use this directory structure for your datasets, or modify it to fit your needs
@@ -210,6 +212,8 @@ class Toolbox:
         # Play it
         wav = wav / np.abs(wav).max() * 0.97
         self.ui.play(wav, Synthesizer.sample_rate)
+        wav_name = "out_%03d" % np.random.randint(1000) + ".wav"
+        librosa.output.write_wav(os.path.join(r'my_speech_data', 'output', wav_name), wav.astype(np.float32), Synthesizer.sample_rate)
 
         # Compute the embedding
         # TODO: this is problematic with different sampling rates, gotta fix it
